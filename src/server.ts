@@ -1,8 +1,9 @@
 import { app } from './app';
 import { AppDataSource } from "./database/db";
 import 'dotenv/config';
+import { Express } from 'express';
 
-const PORT = process.env.PORT || 4001;
+const PORT = process.env.PORT || 4000;
 
 const startServer = () => {
     
