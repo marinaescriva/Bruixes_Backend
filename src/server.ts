@@ -1,25 +1,31 @@
-import { app } from './app';
-import { AppDataSource } from "./database/db";
-import 'dotenv/config';
-import { Express } from 'express';
 
-const PORT = process.env.PORT || 4000;
+// import { AppDataSource } from "./database/db";
+// import 'dotenv/config';
+import express from 'express';
 
-const startServer = () => {
+// const PORT = process.env.PORT || 4000;
+
+const app = express();
+
+app.listen(4001, () => {
+    console.log("server is running");
+})
+
+// const startServer = () => {
     
-    AppDataSource.initialize()
-    .then(() => {
+//     AppDataSource.initialize()
+//     .then(() => {
 
-        console.log(`Database connected`);
+//         console.log(`Database connected`);
 
-        app.listen(PORT, () => {
-            console.log(`server is running on port: ${PORT}`);
-        });
-    })
-    .catch(error => {
+//         app.listen(PORT, () => {
+//             console.log(`server is running on port: ${PORT}`);
+//         });
+//     })
+//     .catch(error => {
 
-        console.log(error);
-    })
-};
+//         console.log(error);
+//     })
+// };
 
-startServer();
+// startServer();
