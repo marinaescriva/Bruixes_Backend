@@ -1,11 +1,11 @@
-import { MigrationInterface, QueryRunner, Table, TableColumn, TableForeignKey } from "typeorm";
+import { MigrationInterface, QueryRunner, Table } from "typeorm";
 
-export class ReservasJuegos1714469789869 implements MigrationInterface {
+export class Inventario1714469789868 implements MigrationInterface {
 
     public async up(queryRunner: QueryRunner): Promise<void> {
         await queryRunner.createTable(
             new Table({
-                name: "reservas_juegos",
+                name: "inventario",
                 columns: [
                     {
                         name: "id",
@@ -13,6 +13,19 @@ export class ReservasJuegos1714469789869 implements MigrationInterface {
                         isPrimary: true,
                         isGenerated: true,
                         generationStrategy: "increment",
+                    },
+                    {
+                        name: "nombre",
+                        type: "varchar",
+                        length: "50",
+                    },
+                    {
+                        name: "cantidad",
+                        type: "int",
+                    },
+                    {
+                        name: "jugadores",
+                        type: "int",
                     },
                     {
                         name: "id_juego",
@@ -33,8 +46,7 @@ export class ReservasJuegos1714469789869 implements MigrationInterface {
     }
 
     public async down(queryRunner: QueryRunner): Promise<void> {
-        await queryRunner.dropTable("reservas_juegos");
+        await queryRunner.dropTable("inventario");
     }
 
 }
-
