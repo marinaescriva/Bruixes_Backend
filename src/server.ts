@@ -1,44 +1,43 @@
-import express, { Application } from "express";
-import dotenv from "dotenv";
+import 'dotenv/config'
+import { app } from './app';
 
-// import { AppDataSource } from "./database/db";
-
-const app : Application = express();
-
-app.use(express.json());
+import { AppDataSource } from "./database/db";
+import { createRole, deleteRole, getRoles} from './controllers/roleController';
 
 const PORT = process.env.PORT || 4001;
 
-app.get('/healthy', (req, res) => {
-    res.status(200).json(
-        {
-            success: true,
-            message:"server is healthy"
-        }
-    )      
-})
-
-
-app.listen(PORT, () => {
-    console.log(`server is running on port: ${PORT}`);
-})
-
-dotenv.config();
-// const startServer = () => {
+const startServer = () => {
     
-//     AppDataSource.initialize()
-//     .then(() => {
+    AppDataSource.initialize()
+    .then(() => {
 
-//         console.log(`Database connected`);
+        console.log(`Database connected`);
 
-//         app.listen(PORT, () => {
-//             console.log(`server is running on port: ${PORT}`);
-//         });
-//     })
-//     .catch(error => {
+        app.listen(PORT, () => {
+            console.log(`server is running on port: ${PORT}`);
+        });
+    })
+    .catch(error => {
 
-//         console.log(error);
-//     })
-// };
+        console.log(error);
+    })
+};
 
-// startServer();
+startServer();
+
+
+// ROLES 
+
+app.get('/roles', getRoles);
+app.post('/roles', createRole);
+app.delete('/roles', deleteRole);
+
+// USERS
+
+// GAMES
+
+// TABLES
+
+// RESERVATIONS
+
+// EVENTS
