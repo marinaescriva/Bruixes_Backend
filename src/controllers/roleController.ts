@@ -1,4 +1,5 @@
 import { Request, Response } from "express";
+import { Role } from "../models/Role";
 // import { Role } from "../models/Role";
 // import { title } from "process";
 

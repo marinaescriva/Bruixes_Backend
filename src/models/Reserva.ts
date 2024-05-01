@@ -31,7 +31,7 @@ export class Reserva extends BaseEntity {
     @ManyToOne(() => User, user => user.reservas)
     user!: User;
 
-    @ManyToOne(() => Evento, evento => evento.id)
+    @ManyToOne(() => Evento, evento => evento.reservas)
     @JoinColumn({name: "id_evento"})
     evento!: Evento;
   
