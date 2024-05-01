@@ -1,5 +1,6 @@
-import { BaseEntity, Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { BaseEntity, Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { User } from "./User";
+import { Evento } from "./Evento";
 
 @Entity('reservas')
 export class Reserva extends BaseEntity {
@@ -29,5 +30,10 @@ export class Reserva extends BaseEntity {
 
     @ManyToOne(() => User, user => user.reservas)
     user!: User;
+
+    @ManyToOne(() => Evento, evento => evento.id)
+    @JoinColumn({name: "id_evento"})
+    evento!: Evento;
+  
 }
 
