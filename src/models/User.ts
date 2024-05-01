@@ -1,5 +1,5 @@
-import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from "typeorm";
-
+import { BaseEntity, Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Reserva } from "./Reserva";
 @Entity('usuarios')
 export class User extends BaseEntity {
     @PrimaryGeneratedColumn()
@@ -25,4 +25,7 @@ export class User extends BaseEntity {
 
     @Column({ name: 'updated_at', type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
     updatedAt!: Date;
+
+    @OneToMany(() => Reserva, reserva => reserva.user) 
+    reservas!: Reserva[];
 }
