@@ -14,7 +14,7 @@ export class Mesas1714469789871 implements MigrationInterface {
                         generationStrategy: "increment",
                     },
                     {
-                        name: "numero",
+                        name: "capacidad",
                         type: "int",
                     },
                     {
