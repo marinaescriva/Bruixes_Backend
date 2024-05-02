@@ -1,6 +1,5 @@
 import { BaseEntity, Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { ReservaJuego } from "./ReservaJuego";
-import { Inventario } from "./Inventario";
 @Entity('juegos')
 export class Juego extends BaseEntity {
     @PrimaryGeneratedColumn()
@@ -18,7 +17,5 @@ export class Juego extends BaseEntity {
     @OneToMany(() => ReservaJuego, reservaJuego => reservaJuego.juego) 
     reservasJuego!: ReservaJuego[];
 
-    @OneToMany(() => Inventario, inventario => inventario.juego) 
-    inventario!: Inventario[];
 }
 
