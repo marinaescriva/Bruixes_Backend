@@ -6,10 +6,10 @@ import { ReservaMesa } from "./ReservaMesa";
 export class Mesa extends BaseEntity {
 
     @PrimaryGeneratedColumn()
-    id!: number;
+    id!: bigint;
 
     @Column({ name: 'capacidad', type: 'int' })
-    capacidad!: bigint;
+    capacidad!: Number;
 
     @Column({ name: 'is_available', type: 'boolean', default: true })
     isAvailable!: boolean;

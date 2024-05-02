@@ -3,7 +3,7 @@ import { Reserva } from "./Reserva";
 @Entity('usuarios')
 export class User extends BaseEntity {
     @PrimaryGeneratedColumn()
-    id!: number;
+    id!: bigint;
 
     @Column({ name: 'nombre', type: 'varchar', length: 50 })
     nombre!: string;
@@ -15,7 +15,7 @@ export class User extends BaseEntity {
     password!: string;
 
     @Column({ name: 'id_role', type: 'int', default: 2 })
-    idRole!: number;
+    idRole!: bigint;
 
     @Column({ name: 'is_active', type: 'boolean', default: true })
     isActive!: boolean;

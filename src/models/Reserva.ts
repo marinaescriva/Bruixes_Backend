@@ -1,6 +1,8 @@
 import { BaseEntity, Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { User } from "./User";
 import { Evento } from "./Evento";
+import { ReservaMesa } from "./ReservaMesa";
+import { ReservaJuego } from "./ReservaJuego";
 
 @Entity('reservas')
 export class Reserva extends BaseEntity {
@@ -8,16 +10,16 @@ export class Reserva extends BaseEntity {
     id!: number;
 
     @Column({ name: 'id_usuario', type: 'int' })
-    idUsuario!: number;
+    idUsuario!: bigint;
 
     @Column({ name: 'id_reserva_mesa', type: 'int' })
-    idReservaMesa!: number;
+    idReservaMesa!: bigint;
 
     @Column({ name: 'id_reserva_juego', type: 'int', nullable: true })
-    idReservaJuego?: number;
+    idReservaJuego?: bigint;
 
     @Column({ name: 'id_evento', type: 'int', nullable: true })
-    idEvento?: number;
+    idEvento?: bigint;
 
     @Column({ name: 'fecha_hora_inicio', type: 'datetime' })
     fechaHoraInicio!: Date;
@@ -30,6 +32,12 @@ export class Reserva extends BaseEntity {
 
     @ManyToOne(() => User, user => user.reservas)
     user!: User;
+
+    @ManyToOne(() => ReservaMesa, reservaMesa => reservaMesa.reserva) 
+    reservaMesa!: ReservaMesa;
+
+    @ManyToOne(() => ReservaJuego, reservaJuego => reservaJuego.reserva)
+    reservaJuego!: ReservaJuego;
 
     @ManyToOne(() => Evento, evento => evento.reservas)
     @JoinColumn({name: "id_evento"})

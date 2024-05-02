@@ -3,7 +3,7 @@ import { ReservaJuego } from "./ReservaJuego";
 @Entity('juegos')
 export class Juego extends BaseEntity {
     @PrimaryGeneratedColumn()
-    id!: number;
+    id!: bigint;
 
     @Column({ name: 'nombre', type: 'varchar', length: 50 })
     nombre!: string;
