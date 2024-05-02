@@ -1,11 +1,11 @@
-import { MigrationInterface, QueryRunner, Table, TableColumn, TableForeignKey } from "typeorm";
+import { MigrationInterface, QueryRunner, Table } from "typeorm";
 
-export class ReservasJuegos1714469789870 implements MigrationInterface {
+export class ReservasMesas1814469789872 implements MigrationInterface {
 
     public async up(queryRunner: QueryRunner): Promise<void> {
         await queryRunner.createTable(
             new Table({
-                name: "reservas_juegos",
+                name: "reservas_mesas",
                 columns: [
                     {
                         name: "id",
@@ -15,15 +15,15 @@ export class ReservasJuegos1714469789870 implements MigrationInterface {
                         generationStrategy: "increment",
                     },
                     {
-                        name: "id_juego",
+                        name: "id_mesa",
                         type: "int",
                     }
                 ],
                 foreignKeys: [
                     {
-                        columnNames: ["id_juego"],
+                        columnNames: ["id_mesa"],
                         referencedColumnNames: ["id"],
-                        referencedTableName: "juegos",
+                        referencedTableName: "mesas",
                         onDelete: "CASCADE",
                     }
                 ]
@@ -33,8 +33,7 @@ export class ReservasJuegos1714469789870 implements MigrationInterface {
     }
 
     public async down(queryRunner: QueryRunner): Promise<void> {
-        await queryRunner.dropTable("reservas_juegos");
+        await queryRunner.dropTable("reservas_mesas");
     }
 
 }
-

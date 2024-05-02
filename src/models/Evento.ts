@@ -1,5 +1,5 @@
-import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from "typeorm";
-
+import { BaseEntity, Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Reserva } from "./Reserva";
 @Entity('eventos')
 export class Evento extends BaseEntity {
     @PrimaryGeneratedColumn()
@@ -16,5 +16,8 @@ export class Evento extends BaseEntity {
 
     @Column({ name: 'info', type: 'varchar', length: 50 })
     info!: string;
+
+    @OneToMany(() => Reserva, (reserva) => reserva.evento)
+    reservas!: Reserva[];
 }
 

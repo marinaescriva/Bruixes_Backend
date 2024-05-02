@@ -1,11 +1,11 @@
-import { MigrationInterface, QueryRunner, Table } from "typeorm";
+import { MigrationInterface, QueryRunner, Table, TableColumn, TableForeignKey } from "typeorm";
 
-export class Inventario1714469789868 implements MigrationInterface {
+export class ReservasJuegos1914469789870 implements MigrationInterface {
 
     public async up(queryRunner: QueryRunner): Promise<void> {
         await queryRunner.createTable(
             new Table({
-                name: "inventario",
+                name: "reservas_juegos",
                 columns: [
                     {
                         name: "id",
@@ -15,21 +15,13 @@ export class Inventario1714469789868 implements MigrationInterface {
                         generationStrategy: "increment",
                     },
                     {
-                        name: "nombre",
-                        type: "varchar",
-                        length: "50",
-                    },
-                    {
-                        name: "cantidad",
-                        type: "int",
-                    },
-                    {
-                        name: "jugadores",
-                        type: "int",
-                    },
-                    {
                         name: "id_juego",
                         type: "int",
+                    },
+                    {
+                        name: "created_at",
+                        type: "timestamp",
+                        default: "CURRENT_TIMESTAMP",
                     }
                 ],
                 foreignKeys: [
@@ -39,14 +31,17 @@ export class Inventario1714469789868 implements MigrationInterface {
                         referencedTableName: "juegos",
                         onDelete: "CASCADE",
                     }
+
                 ]
+
             }),
             true
         );
     }
 
     public async down(queryRunner: QueryRunner): Promise<void> {
-        await queryRunner.dropTable("inventario");
+        await queryRunner.dropTable("reservas_juegos");
     }
 
 }
+
