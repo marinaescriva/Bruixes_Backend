@@ -9,7 +9,7 @@ export class Juego extends BaseEntity {
     nombre!: string;
 
     @Column({ name: 'jugadores', type: 'int' })
-    jugadores!: number;
+    jugadores!: bigint;
 
     @Column({ name: 'is_available', type: 'boolean', default: true })
     isAvailable!: boolean;
