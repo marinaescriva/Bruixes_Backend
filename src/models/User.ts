@@ -14,7 +14,7 @@ export class User extends BaseEntity {
     @Column({ name: 'password', type: 'varchar', length: 255 })
     password!: string;
 
-    @Column({ name: 'id_role', type: 'int' })
+    @Column({ name: 'id_role', type: 'int', default: 2 })
     idRole!: number;
 
     @Column({ name: 'is_active', type: 'boolean', default: true })
