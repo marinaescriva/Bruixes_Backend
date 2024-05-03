@@ -94,7 +94,7 @@ const juegoSeeder = async () => {
             newJuego.nombre = faker.commerce.productName();
             newJuego.jugadores = faker.datatype.number({ min: 1, max: 4 });
             // newJuego.inventario = faker.datatype.number({ min: 1, max: 4 });
-            newJuego.isAvailable = faker.datatype.boolean();
+            newJuego.isAvailable = true;
             await newJuego.save();
         }
 

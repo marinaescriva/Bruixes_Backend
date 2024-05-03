@@ -2,7 +2,6 @@ import { Request, Response } from "express";
 import { User } from "../models/User";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
-import { handleError } from "../utils/handleError";
 
 export const register = async (req: Request, res: Response) => {
 
@@ -140,9 +139,9 @@ export const login = async (req: Request, res: Response) => {
         }
         
         const token = jwt.sign({
-            userId: user.id,
-            role: user.idRole,
-            name: user.nombre
+            id: user.id,
+            id_role: user.idRole,
+            nombre: user.nombre
         },
             process.env.JWT_SECRET as string,
             // {
