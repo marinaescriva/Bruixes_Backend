@@ -23,10 +23,10 @@ export class Juegos1714469789868 implements MigrationInterface {
                         name: "jugadores",
                         type: "int",
                     },
-                    {
-                        name:"inventario",
-                        type:"int",
-                    },
+                    // {
+                    //     name:"inventario",
+                    //     type:"int",
+                    // },
                     {
                         name: "is_available",
                         type: "boolean",

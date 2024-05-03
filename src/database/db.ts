@@ -9,6 +9,14 @@ import { Eventos1714475300399 } from "./migrations/1714475300399-eventos";
 import { Reservas2014469789870 } from "./migrations/2014469789870-reservas";
 import { ReservasMesas1814469789872 } from "./migrations/1814469789872-reservas_mesas";
 import { ReservasJuegos1914469789870 } from "./migrations/1914469789870-reservas_juegos";
+import { Role } from "../models/Role";
+import { User } from "../models/User";
+import { Juego } from "../models/Juego";
+import { Mesa } from "../models/Mesa";
+import { Evento } from "../models/Evento";
+import { Reserva } from "../models/Reserva";
+import { ReservaMesa } from "../models/ReservaMesa";
+import { ReservaJuego } from "../models/ReservaJuego";
 
 
 export const AppDataSource = new DataSource({
@@ -18,7 +26,7 @@ export const AppDataSource = new DataSource({
     username: process.env.DB_USER || "root",
     password: process.env.DB_ROOT_PASSWORD || "1234",
     database: process.env.DB_DATABASE || "test",
-    entities: [],
+    entities: [Role, User, Juego, Mesa, Evento, Reserva, ReservaMesa, ReservaJuego],
     migrations: [
         Roles1714469789866,
         Usuarios1714469789867,

@@ -1,5 +1,7 @@
 import express, { Application } from "express";
 import cors from "cors";
+import { login , register} from "./controllers/authController";
+// import { auth } from "./middlewares/auth";
 
 // import { getUsers, getUsersProfile, updateUsersProfile, deleteUser } from "./controllers/usersController";
 // import { getServices } from "./controllers/servicesController";
@@ -7,14 +9,20 @@ import cors from "cors";
 // import { createRoles, deleteRoles, getRoles} from "./controllers/rolesController";
 // import { login, register } from "./controllers/authentificationController";
 
-// import { auth } from "./middlewares/auth";
-// import { isSuperAdmin} from "./middlewares/isSuperAdmin";
 
+// import { isSuperAdmin} from "./middlewares/isSuperAdmin";
 
 export const app: Application = express();
 
 app.use(express.json());
 app.use(cors());
+
+app.use("/api/healthy", (req, res) => {
+    res.status(200).json({
+      succes: true,
+      message: "Server is healthy",
+    });
+  });
 
 //USERS 
 // app.get(`/api/users`, auth, isSuperAdmin, getUsers); // ONLY SUPER_ADMIN
@@ -29,9 +37,10 @@ app.use(cors());
 // // app.put('/api/roles', updateRoles); // extra
 // app.delete('/api/roles/:id', deleteRoles); // extra
 
-//AUTH
-// app.post(`/api/auth/login`, login);
-// app.post(`/api/auth/register`, register); 
+// AUTH
+
+app.post(`/api/auth/login`, login);
+app.post(`/api/auth/register`, register); 
 
 //CITAS APPOINTMENTS
 // app.get(`/api/appointments/:id`, auth, getAppointmentsById);
@@ -43,3 +52,5 @@ app.use(cors());
 //SERVICES
 // app.get(`/api/services`, getServices);
 
+
+export default app;

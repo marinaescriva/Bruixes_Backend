@@ -1,112 +1,141 @@
-import { Role } from "../../models/Role";
-import { User } from "../../models/User";
-import { Juego } from "../../models/Juego";
-import bcrypt from "bcrypt";
-import { fakerES } from "@faker-js/faker";
+
+import { Role } from '../../models/Role';
+import { User } from '../../models/User';
+import { Juego } from '../../models/Juego';
+import { faker } from '@faker-js/faker';
+import bcrypt from 'bcrypt';
+import { AppDataSource } from "../db";
+import { Mesa } from '../../models/Mesa';
 
 
-// ------------------------
-//  como son los 2 roles y generar los 2 roles
-//-------------------------
 const roleSeeder = async () => {
+    try {
+        await AppDataSource.initialize();
 
-    const superAdminRole = new Role();
-    superAdminRole.id = 1;
-    superAdminRole.nombre = "superadmin";
-    await superAdminRole.save();
+        const roleSuperAdmin = new Role();
+        roleSuperAdmin.nombre = 'superadmin';
+        roleSuperAdmin.id = 1;
+        await roleSuperAdmin.save();
 
-    const userRole = new Role();
-    userRole.id = 2;
-    userRole.nombre = "user";
-    await userRole.save();
+        const roleUser = new Role();
+        roleUser.nombre = 'user';
+        roleUser.id = 2;
 
+        await roleUser.save();
+    }
+    catch (error) {
+        console.log(error);
+    }
 };
 
-//-------------------------
-//como es un superadmin
-//-------------------------
+const userSeeder = async () => {
+    try {
+        console.log("aqui entra no")
+        await roleSeeder();
+        console.log("aqui entra 1")
 
-const superAdminSeeder = async () => {
-    const superAdmin = new User();
+        const userSuperAdmin = new User();
+        userSuperAdmin.nombre = 'superadmin';
+        userSuperAdmin.email = 'superadmin@gmail.com';
+        userSuperAdmin.password = bcrypt.hashSync('123456', 6);
+        userSuperAdmin.idRole = 1;
+        userSuperAdmin.isActive = true;
+        userSuperAdmin.createdAt = new Date();
+        userSuperAdmin.updatedAt = new Date();
 
-    superAdmin.nombre = "superadmin";
-    superAdmin.email = "superadmin@gmail.com";
-    superAdmin.password = bcrypt.hashSync("123456", 6);
-    superAdmin.idRole = 1;
-    superAdmin.isActive = true;
-    superAdmin.createdAt = new Date();
-    superAdmin.updatedAt = new Date();
+        console.log(userSuperAdmin.nombre ," el superadmin");
 
-    await superAdmin.save();
+        await userSuperAdmin.save();
+
+        const userUser = new User();
+        userUser.nombre = 'user';
+        userUser.email = 'user@gmail.com';
+        userUser.password = bcrypt.hashSync('123456', 6);
+        userUser.idRole = 2;
+        userUser.isActive = true;
+        userUser.createdAt = new Date();
+        userUser.updatedAt = new Date();
+
+        console.log(userUser.nombre ," el user");
+
+        await userUser.save();
+
+        for (let i = 0; i < 20; i++) {
+            const generatedUser = new User();
+            console.log("el usuario 1", i+1);
+            generatedUser.nombre = faker.person.firstName();
+            generatedUser.email = faker.internet.email();
+            generatedUser.password = bcrypt.hashSync('123456', 6);
+            generatedUser.idRole = 2;
+            generatedUser.isActive = true;
+            generatedUser.createdAt = new Date();
+            generatedUser.updatedAt = new Date();
+            await generatedUser.save();
+        }
+
+    }
+    catch (error) {
+        console.log(error);
+    }
+};
+
+const juegoSeeder = async () => {
+    try{
+        const newJuegoBase = new Juego();
+        newJuegoBase.nombre = "Juego de mesa";
+        newJuegoBase.jugadores = 4;
+        // newJuegoBase.inventario = 1;
+        newJuegoBase.isAvailable = true;
+
+        await newJuegoBase.save();
+
+        for (let i = 0; i < 20; i++) {
+            const newJuego = new Juego();
+            newJuego.nombre = faker.commerce.productName();
+            newJuego.jugadores = faker.datatype.number({ min: 1, max: 4 });
+            // newJuego.inventario = faker.datatype.number({ min: 1, max: 4 });
+            newJuego.isAvailable = faker.datatype.boolean();
+            await newJuego.save();
+        }
+
+    }catch(error){
+        console.log(error);
+    }
 
 }
 
-//-------------------------
-// como es un usuario 
-//-------------------------
-const userSeeder = async () => {
+const mesaSeeder = async () => {
+    try{
+        const newMesaBase = new Mesa();
+        newMesaBase.capacidad = 4;
+        newMesaBase.isAvailable = true;
 
-    const user = new User();
+        await newMesaBase.save();
 
-    user.nombre = fakerES.person.firstName();
-    user.email = fakerES.internet.email();
-    user.password = bcrypt.hashSync("123456", 6);
-    user.idRole = 2;
-    user.isActive = true;
-    user.createdAt = new Date();
-    user.updatedAt = new Date();
+        for (let i = 0; i < 20; i++) {
+            const newMesa = new Mesa();
+            newMesa.capacidad = 4;
+            newMesa.isAvailable = true;
+            await newMesa.save();
+        }
 
-    await user.save();
+    }catch(error){
+        console.log(error);
+    }
 
-    return user;
-};
+}
 
-//-------------------------
-// funcion que genera el superadmin y los 20 usuarios falsos
-//-------------------------
-const fakeUsersSeeder = async () => {
-
+const startSeeder = async () => {
+    try{
     await roleSeeder();
+    await userSeeder();
+    await juegoSeeder();
+    await mesaSeeder();
 
-    const userPromises = Array.from({ length: 20 }, () => userSeeder());
-    const users = await Promise.all(userPromises);
-
-    await superAdminSeeder();
-
-    console.log(users);
-    return users;
-};
-
-fakeUsersSeeder().catch(console.error);
-
-//-------------------------
-// como es un juego random
-//-------------------------
-const juegoSeeder = async () => {
-
-    const juego = new Juego();
-
-    juego.nombre = fakerES.commerce.productName();
-    juego.jugadores = fakerES.number.bigInt({ min: 1, max: 8 });
-    juego.isAvailable = true;
-
-    await juego.save();
-
-    return juego;
-};
-
-//-------------------------
-// funcion que genera 20 juegos random
-//-------------------------
-const fakeJuegosSeeder = async () => {
-
-    const juegoPromises = Array.from({ length: 20 }, () => juegoSeeder());
-    const juegos = await Promise.all(juegoPromises);
-
-    console.log(juegos);
-    return juegos;
-};
-
-fakeJuegosSeeder().catch(console.error);
-
-
+    }catch(error){
+        console.log(error);
+    }finally{
+        await AppDataSource.destroy();
+    }
+  };
+  startSeeder();
