@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
-import { User } from  "../models/User";
-import jwt from "jsonwebtoken";
+import { User } from "../models/User";
+// import { TokenData } from "../types";
 
 
 export const getAllUsers = async (req: Request, res: Response) => {
@@ -14,7 +14,7 @@ export const getAllUsers = async (req: Request, res: Response) => {
                 createdAt: true,
                 updatedAt: true
             }
-            });
+        });
 
         res.status(200).json({
             success: true,
@@ -42,8 +42,8 @@ export const getMyProfile = async (req: Request, res: Response) => {
                 createdAt: true,
                 updatedAt: true
             }
-        
-        }) 
+
+        })
 
         if (!userId) {
             res.status(404).json({
@@ -74,47 +74,92 @@ export const updateProfile = async (req: Request, res: Response) => {
 
         const validEmail = /^\w+([.-_+]?\w+)*@\w+([.-]?\w+)*(\.\w{2,10})+$/;
         if (email) {
-          if (!validEmail.test(email)) {
-            return res.status(400).json({
-              success: false,
-              message: "format email invalid",
-            });
-          }
+            if (!validEmail.test(email)) {
+                return res.status(400).json({
+                    success: false,
+                    message: "format email invalid",
+                });
+            }
         }
-    
+
         const userEmail = await User.findOne({
-          where: {
-            email: email,
-          },
+            where: {
+                email: email,
+            },
         });
-    
+
         if (userEmail) {
-          throw new Error("Email already in use");
+            throw new Error("Email already in use");
         }
-    
+
         const userUpdated = await User.update(
-          {
-            id: id,
-          },
-    
-          {
-            nombre: nombre,
-            email: email,
-          }
+            {
+                id: id,
+            },
+
+            {
+                nombre: nombre,
+                email: email,
+            }
         );
 
         const userEmailUpdated = await User.findOne({
             where: { id },
             select: ['nombre', 'email']
         });
-    
+
         res.status(201).json({
-          success: true,
-          message: "User updated",
-          data: userEmailUpdated,
+            success: true,
+            message: "User updated",
+            data: userEmailUpdated,
         });
 
         console.log(userUpdated, "usuario actualizado");
+
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            message: "Internal Server Error"
+        });
+    }
+}
+
+
+export const deleteUser = async (req: Request, res: Response) => {
+    try {
+        const id = parseInt(req.params.id);
+        // const id_role = req.tokenData.id_role;
+
+        const userDeleting: any = await User.findOneBy({
+            id: id,
+          });
+          console.log(userDeleting);
+
+
+        if (userDeleting.id === 1) {
+            res.status(401).json({
+                success: false,
+                message: "superadmin cant be deleted"
+            });
+            return;
+
+        }
+
+        if (!userDeleting) {
+            res.status(404).json({
+                succes: false,
+                message: "user not found",
+            });
+        }
+
+        User.delete({
+            id: id
+        });
+
+        res.status(200).json({
+            "success": true,
+            "message": "User deleted successfuly"
+        })
 
     } catch (error) {
         res.status(500).json({

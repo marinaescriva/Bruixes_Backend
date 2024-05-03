@@ -3,8 +3,9 @@ import cors from "cors";
 import { login , register} from "./controllers/authController";
 import { auth } from "./middlewares/auth";
 import { superadmin} from "./middlewares/superadmin";
-import { getAllUsers, getMyProfile, updateProfile} from "./controllers/userController";
-
+import { getAllUsers, getMyProfile, updateProfile, deleteUser} from "./controllers/userController";
+import { getAllGames } from "./controllers/gameController";
+import { getAllTables } from "./controllers/tableController";
 
 // import { getUsers, getUsersProfile, updateUsersProfile, deleteUser } from "./controllers/usersController";
 // import { getServices } from "./controllers/servicesController";
@@ -37,12 +38,16 @@ app.post(`/api/auth/register`, register); // funciona
 app.get(`/api/users`,auth, superadmin, getAllUsers); // funciona
 app.get(`/api/users/profile`, auth, getMyProfile); //funciona
 app.put(`/api/users/profile`, auth, updateProfile); //funciona
-// app.delete(`/api/users/:id`, auth, isSuperAdmin , deleteUser);
+app.delete(`/api/users/:id`, auth, superadmin , deleteUser); //funciona, no elimina superadmin
 
 
 // GAMES
 
-// TABLES
+app.get(`/api/games`, auth, getAllGames); // funciona 
+
+// TABLES - MESAS
+
+app.get(`/api/tables`, auth, getAllTables); // funciona
 
 // RESERVATIONS
 
