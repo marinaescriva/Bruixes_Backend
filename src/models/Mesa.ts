@@ -6,7 +6,7 @@ import { ReservaMesa } from "./ReservaMesa";
 export class Mesa extends BaseEntity {
 
     @PrimaryGeneratedColumn()
-    id!: bigint;
+    id!: number;
 
     @Column({ name: 'capacidad', type: 'int' })
     capacidad!: Number;

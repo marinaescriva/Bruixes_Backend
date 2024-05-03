@@ -152,7 +152,7 @@ export const deleteUser = async (req: Request, res: Response) => {
             });
         }
 
-        User.delete({
+        await User.delete({
             id: id
         });
 

@@ -4,8 +4,8 @@ import { login , register} from "./controllers/authController";
 import { auth } from "./middlewares/auth";
 import { superadmin} from "./middlewares/superadmin";
 import { getAllUsers, getMyProfile, updateProfile, deleteUser} from "./controllers/userController";
-import { getAllGames } from "./controllers/gameController";
-import { getAllTables } from "./controllers/tableController";
+import { getAllGames , deleteGame} from "./controllers/gameController";
+import { getAllTables , deleteTable} from "./controllers/tableController";
 
 // import { getUsers, getUsersProfile, updateUsersProfile, deleteUser } from "./controllers/usersController";
 // import { getServices } from "./controllers/servicesController";
@@ -44,10 +44,14 @@ app.delete(`/api/users/:id`, auth, superadmin , deleteUser); //funciona, no elim
 // GAMES
 
 app.get(`/api/games`, auth, getAllGames); // funciona 
+app.delete(`/api/games/:id`, auth, superadmin , deleteGame); //funciona
+
 
 // TABLES - MESAS
 
 app.get(`/api/tables`, auth, getAllTables); // funciona
+app.delete(`/api/tables/:id`, auth, superadmin , deleteTable); //funciona
+
 
 // RESERVATIONS
 
