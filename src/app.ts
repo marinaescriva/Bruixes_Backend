@@ -1,7 +1,10 @@
 import express, { Application } from "express";
 import cors from "cors";
 import { login , register} from "./controllers/authController";
-// import { auth } from "./middlewares/auth";
+import { auth } from "./middlewares/auth";
+import { superadmin} from "./middlewares/superadmin";
+import { getAllUsers, getMyProfile, updateProfile} from "./controllers/userController";
+
 
 // import { getUsers, getUsersProfile, updateUsersProfile, deleteUser } from "./controllers/usersController";
 // import { getServices } from "./controllers/servicesController";
@@ -10,7 +13,6 @@ import { login , register} from "./controllers/authController";
 // import { login, register } from "./controllers/authentificationController";
 
 
-// import { isSuperAdmin} from "./middlewares/isSuperAdmin";
 
 export const app: Application = express();
 
@@ -24,12 +26,27 @@ app.use("/api/healthy", (req, res) => {
     });
   });
 
-//USERS 
-// app.get(`/api/users`, auth, isSuperAdmin, getUsers); // ONLY SUPER_ADMIN
-// app.get(`/api/users/profile`, auth, getUsersProfile); 
-// app.put(`/api/users/profile`, auth, updateUsersProfile);
+
+    // AUTH
+
+app.post(`/api/auth/login`, login); //funciona
+app.post(`/api/auth/register`, register); // funciona
+
+    //USERS 
+
+app.get(`/api/users`,auth, superadmin, getAllUsers); // funciona
+app.get(`/api/users/profile`, auth, getMyProfile); //funciona
+app.put(`/api/users/profile`, auth, updateProfile); //funciona
 // app.delete(`/api/users/:id`, auth, isSuperAdmin , deleteUser);
 
+
+// GAMES
+
+// TABLES
+
+// RESERVATIONS
+
+// EVENTS
 
 //ROLES
 // app.post('/api/roles', createRoles); // extra
@@ -37,10 +54,7 @@ app.use("/api/healthy", (req, res) => {
 // // app.put('/api/roles', updateRoles); // extra
 // app.delete('/api/roles/:id', deleteRoles); // extra
 
-// AUTH
 
-app.post(`/api/auth/login`, login);
-app.post(`/api/auth/register`, register); 
 
 //CITAS APPOINTMENTS
 // app.get(`/api/appointments/:id`, auth, getAppointmentsById);

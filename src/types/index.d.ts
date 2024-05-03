@@ -1,6 +1,8 @@
 export type TokenData = {
-    userId: number;
-    name: string;
+    id: number;
+    nombre: string;
+    id_role: number;
+    email: string;
 };
 
 declare global {
