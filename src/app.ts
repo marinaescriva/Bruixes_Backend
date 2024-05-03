@@ -6,13 +6,7 @@ import { superadmin} from "./middlewares/superadmin";
 import { getAllUsers, getMyProfile, updateProfile, deleteUser} from "./controllers/userController";
 import { getAllGames , deleteGame} from "./controllers/gameController";
 import { getAllTables , deleteTable} from "./controllers/tableController";
-
-// import { getUsers, getUsersProfile, updateUsersProfile, deleteUser } from "./controllers/usersController";
-// import { getServices } from "./controllers/servicesController";
-// import { deleteAppointments, getAppointments, getAppointmentsById, postAppointments, updateAppointments } from "./controllers/appointmentsController";
-// import { createRoles, deleteRoles, getRoles} from "./controllers/rolesController";
-// import { login, register } from "./controllers/authentificationController";
-
+import { getAllReservas } from "./controllers/reservaController";
 
 
 export const app: Application = express();
@@ -53,7 +47,9 @@ app.get(`/api/tables`, auth, getAllTables); // funciona
 app.delete(`/api/tables/:id`, auth, superadmin , deleteTable); //funciona
 
 
-// RESERVATIONS
+// RESERVAS
+
+app.get(`/api/reservas`, auth, getAllReservas); //funciona pero array vacio porq no hay reservas aun aqui
 
 // EVENTS
 
