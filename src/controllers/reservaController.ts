@@ -35,3 +35,6 @@ export const getAllReservas = async (req: Request, res: Response) => {
         });
     }
 };
+
+export const newReserva = async (req: Request, res: Response) => {
+};
