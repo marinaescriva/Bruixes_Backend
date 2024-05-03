@@ -11,6 +11,9 @@ export class Juego extends BaseEntity {
     @Column({ name: 'jugadores', type: 'int' })
     jugadores!: number;
 
+    // @Column ({ name: 'inventario', type: 'int' })
+    // inventario!: number;
+
     @Column({ name: 'is_available', type: 'boolean', default: true })
     isAvailable!: boolean;
 

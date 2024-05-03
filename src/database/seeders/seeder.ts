@@ -84,6 +84,7 @@ const juegoSeeder = async () => {
         const newJuegoBase = new Juego();
         newJuegoBase.nombre = "Juego de mesa";
         newJuegoBase.jugadores = 4;
+        // newJuegoBase.inventario = 1;
         newJuegoBase.isAvailable = true;
 
         await newJuegoBase.save();
@@ -92,6 +93,7 @@ const juegoSeeder = async () => {
             const newJuego = new Juego();
             newJuego.nombre = faker.commerce.productName();
             newJuego.jugadores = faker.datatype.number({ min: 1, max: 4 });
+            // newJuego.inventario = faker.datatype.number({ min: 1, max: 4 });
             newJuego.isAvailable = faker.datatype.boolean();
             await newJuego.save();
         }
@@ -129,6 +131,7 @@ const startSeeder = async () => {
     await userSeeder();
     await juegoSeeder();
     await mesaSeeder();
+
     }catch(error){
         console.log(error);
     }finally{
