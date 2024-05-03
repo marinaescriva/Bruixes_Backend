@@ -10,16 +10,16 @@ export class Reserva extends BaseEntity {
     id!: number;
 
     @Column({ name: 'id_usuario', type: 'int' })
-    idUsuario!: bigint;
+    idUsuario!: number;
 
     @Column({ name: 'id_reserva_mesa', type: 'int' })
     idReservaMesa!: bigint;
 
     @Column({ name: 'id_reserva_juego', type: 'int', nullable: true })
-    idReservaJuego?: bigint;
+    idReservaJuego?: number;
 
     @Column({ name: 'id_evento', type: 'int', nullable: true })
-    idEvento?: bigint;
+    idEvento?: number;
 
     @Column({ name: 'fecha_hora_inicio', type: 'datetime' })
     fechaHoraInicio!: Date;

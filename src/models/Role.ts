@@ -3,7 +3,7 @@ import { User } from "./User";
 @Entity('roles')
 export class Role extends BaseEntity {
     @PrimaryGeneratedColumn()
-    id!: bigint
+    id!: number
 
     @Column({name:'nombre'})
     nombre!: string

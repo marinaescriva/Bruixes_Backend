@@ -3,13 +3,13 @@ import { ReservaJuego } from "./ReservaJuego";
 @Entity('juegos')
 export class Juego extends BaseEntity {
     @PrimaryGeneratedColumn()
-    id!: bigint;
+    id!: number;
 
     @Column({ name: 'nombre', type: 'varchar', length: 50 })
     nombre!: string;
 
     @Column({ name: 'jugadores', type: 'int' })
-    jugadores!: bigint;
+    jugadores!: number;
 
     @Column({ name: 'is_available', type: 'boolean', default: true })
     isAvailable!: boolean;

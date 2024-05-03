@@ -7,7 +7,10 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon ./src/server.ts",
     "run-migrations": "npx typeorm-ts-node-commonjs migration:run -d ./src/database/db.ts",
-    "revert-migrations": "npx typeorm-ts-node-commonjs migration:revert -d ./src/database/db.ts"
+    "revert-migrations": "npx typeorm-ts-node-commonjs migration:revert -d ./src/database/db.ts",
+    "build": "tsc",
+    "start": "node ./dist/server.js",
+    "seeder": "ts-node ./src/Database/seeders/seeder.ts"
   },
   "author": "marina",
   "license": "ISC",
