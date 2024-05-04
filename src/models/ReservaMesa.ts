@@ -1,9 +1,9 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, BaseEntity, Column, ManyToOne } from "typeorm";
 import { Reserva } from "./Reserva";
 import { Mesa } from "./Mesa";
 
 @Entity('reservas_mesas')
-export class ReservaMesa {
+export class ReservaMesa extends BaseEntity{
     @PrimaryGeneratedColumn()
     id!: number;
 

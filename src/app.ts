@@ -51,6 +51,7 @@ app.delete(`/api/tables/:id`, auth, superadmin , deleteTable); //funciona
 
 app.get(`/api/reservas`, auth, getAllReservas); //funciona pero array vacio porq no hay reservas aun aqui
 app.post(`/api/reservas`, auth, newReserva); //proceso
+
 // EVENTS
 
 //ROLES

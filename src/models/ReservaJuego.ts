@@ -5,13 +5,13 @@ import { Reserva } from "./Reserva";
 @Entity('reservas_juegos')
 export class ReservaJuego extends BaseEntity {
     @PrimaryGeneratedColumn()
-    id!: bigint;
+    id!: number;
 
     @Column({ name: 'id_reserva', type: 'int' })
-    idReserva!: bigint;
+    idReserva!: number;
 
     @Column({ name: 'id_juego', type: 'int' })
-    idJuego!: bigint;
+    idJuego!: number;
 
     @ManyToOne(() => Reserva, (reserva)=> reserva.idReservaJuego) 
     reserva!: Reserva;
