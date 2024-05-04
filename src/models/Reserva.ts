@@ -13,7 +13,7 @@ export class Reserva extends BaseEntity {
     @Column({ name: 'id_usuario', type: 'int' })
     idUsuario!: number;
 
-    @Column({ name: 'id_mesa', type: 'int' })
+    @Column({ name: 'id_mesa', type: 'int', unique: true})
     idMesa!: number;
 
     @Column({ name: 'id_juego', type: 'int', nullable: true })

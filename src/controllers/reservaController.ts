@@ -40,53 +40,42 @@ export const getAllReservas = async (req: Request, res: Response) => {
 
 export const newReserva = async (req: Request, res: Response) => {
     try {
+        const { idMesa, idJuego, idEvento, fechaHoraInicio, fechaHoraFin } = req.body;
 
-        const { idMesa, idJuego, idEvento, fechaHoraInicio, fechaHoraFin} = req.body;
-
-        console.log("aqui")
-
+        // Verificar si los parámetros requeridos están presentes
         if (!idMesa || !fechaHoraInicio || !fechaHoraFin) {
             return res.status(400).json({
                 success: false,
-                message: "Missing required parameters"
+                message: "Faltan parámetros requeridos"
             });
         }
-        console.log("aqui", 1)
 
-        // Buscar mesa disponible
-        const mesa = await Mesa.findOne(
-            {
-                where:
-                {
-                    isAvailable: true,
-                    id: idMesa
-                }
+        // Buscar y reservar la mesa
+        const mesa = await Mesa.findOne({
+            where: {
+                isAvailable: true,
+                id: idMesa
             }
-        );
+        });
 
         if (!mesa) {
             return res.status(400).json({
                 success: false,
-                message: "No está disponible la mesa seleccionada"
+                message: "La mesa seleccionada no está disponible"
             });
         }
-        console.log("aqui", 2)
 
-
-         // Crear una nueva reserva
-         const reserva = new Reserva();
-         reserva.idUsuario = req.tokenData.id;
-         reserva.fechaHoraInicio = fechaHoraInicio;
-         reserva.fechaHoraFin = fechaHoraFin;
-         reserva.idMesa = idMesa;
-         await reserva.save()
-
-        console.log("aqui", 3.4)
-
+        mesa.isAvailable = false;
+        await mesa.save();
 
         // Si se proporcionó un juego, reservarlo también
         if (idJuego) {
-            const juego = await Juego.findOne({ where: { id: idJuego, isAvailable: true } });
+            const juego = await Juego.findOne({
+                where: {
+                    id: idJuego,
+                    isAvailable: true
+                }
+            });
 
             if (!juego) {
                 return res.status(400).json({
@@ -95,16 +84,27 @@ export const newReserva = async (req: Request, res: Response) => {
                 });
             }
 
-            // Asociar la reservaJuego con la reserva creada
-            reserva.idJuego = idJuego;
-            await reserva.save();
+            juego.isAvailable = false;
+            await juego.save();
         }
 
+        // Crear una nueva reserva
+        const reserva = new Reserva();
+        reserva.idUsuario = req.tokenData.id;
+        reserva.fechaHoraInicio = fechaHoraInicio;
+        reserva.fechaHoraFin = fechaHoraFin;
+        reserva.idMesa = idMesa;
+
+        if (idJuego) {
+            reserva.idJuego = idJuego;
+        }
+
+        await reserva.save();
 
         // Devolver la respuesta con la reserva creada
         res.status(201).json({
             success: true,
-            message: "Reserva is successfully",
+            message: "Reserva creada exitosamente",
             data: {
                 reserva: reserva,
                 mesa: idMesa,
@@ -113,12 +113,11 @@ export const newReserva = async (req: Request, res: Response) => {
             }
         });
     } catch (error) {
-        // Manejar errores
-        console.log("aqui", 5)
+        
         console.error("Error al crear la reserva:", error);
         res.status(500).json({
             success: false,
-            message: "Internal Server Error"
+            message: "Error interno del servidor"
         });
     }
 };
