@@ -42,10 +42,11 @@ export const getAllReservas = async (req: Request, res: Response) => {
 export const newReserva = async (req: Request, res: Response) => {
     try {
         const idUsuario = req.tokenData.id;
-        const {idReservaMesa, idMesa, idJuego, idReservaJuego, fechaHoraInicio } = req.body;
-        
+        const { idMesa, idJuego, fechaHoraInicio } = req.body;
+
         console.log("aqui")
-        if (!idUsuario || !idReservaMesa || !fechaHoraInicio) {
+
+        if (!idUsuario) {
             return res.status(400).json({
                 success: false,
                 message: "Missing required parameters"
@@ -57,33 +58,41 @@ export const newReserva = async (req: Request, res: Response) => {
         const mesa = await Mesa.findOne(
             {
                 where:
-                    { isAvailable: true }
+                {
+                    isAvailable: true,
+                    id: idMesa
+                }
             }
         );
 
         if (!mesa) {
             return res.status(400).json({
                 success: false,
-                message: "No hay mesas disponibles"
+                message: "No está disponible la mesa seleccionada"
             });
         }
         console.log("aqui", 2)
 
-        // Crear una asociación entre la reserva y la mesa seleccionada
+        // Crear una asociación entre la reserva_mesa y la mesa seleccionada
         const reservaMesa = new ReservaMesa();
-        reservaMesa.idMesa = idMesa;
+        reservaMesa.idMesa = idMesa
         await reservaMesa.save();
 
-        console.log("aqui", 4)
-
-        // Crear una nueva reserva
-        const reserva = new Reserva();
-        reserva.idUsuario = idUsuario;
-        reserva.idReservaMesa = reservaMesa.id;
-        reserva.fechaHoraInicio = fechaHoraInicio;
-        await reserva.save()
-
         console.log("aqui", 3)
+
+         // Crear una nueva reserva
+         const reserva = new Reserva();
+         reserva.idUsuario = idUsuario;
+         reserva.fechaHoraInicio = fechaHoraInicio;
+         reserva.idReservaMesa = reservaMesa.id;
+         await reserva.save()
+
+        console.log("aqui", 3.4)
+
+        reserva.idReservaMesa = reservaMesa.id;
+        await reserva.save();
+
+        console.log("aqui", 4)
 
         // Si se proporcionó un juego, reservarlo también
         if (idJuego) {

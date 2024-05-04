@@ -1,4 +1,4 @@
-import { BaseEntity, Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { BaseEntity, Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { Juego } from "./Juego";
 import { Reserva } from "./Reserva";
 
@@ -13,7 +13,7 @@ export class ReservaJuego extends BaseEntity {
     @Column({ name: 'id_juego', type: 'int' })
     idJuego!: number;
 
-    @ManyToOne(() => Reserva, (reserva)=> reserva.idReservaJuego) 
+    @OneToMany(() => Reserva, (reserva)=> reserva.idReservaJuego) 
     reserva!: Reserva;
 
     @ManyToOne(() => Juego, (juego) => juego.reservasJuego) 

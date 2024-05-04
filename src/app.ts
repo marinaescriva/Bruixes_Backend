@@ -52,25 +52,5 @@ app.delete(`/api/tables/:id`, auth, superadmin , deleteTable); //funciona
 app.get(`/api/reservas`, auth, getAllReservas); //funciona pero array vacio porq no hay reservas aun aqui
 app.post(`/api/reservas`, auth, newReserva); //proceso
 
-// EVENTS
-
-//ROLES
-// app.post('/api/roles', createRoles); // extra
-// app.get('/api/roles', getRoles); // extra
-// // app.put('/api/roles', updateRoles); // extra
-// app.delete('/api/roles/:id', deleteRoles); // extra
-
-
-
-//CITAS APPOINTMENTS
-// app.get(`/api/appointments/:id`, auth, getAppointmentsById);
-// app.get(`/api/appointments`, auth, getAppointments); 
-// app.post(`/api/appointments`, auth, postAppointments);
-// app.put(`/api/appointments`, auth, updateAppointments);
-// app.delete(`/api/appointments`, auth, deleteAppointments);
-
-//SERVICES
-// app.get(`/api/services`, getServices);
-
 
 export default app;

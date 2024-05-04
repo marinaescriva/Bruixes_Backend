@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, BaseEntity, Column, ManyToOne } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, BaseEntity, Column, ManyToOne, OneToMany } from "typeorm";
 import { Reserva } from "./Reserva";
 import { Mesa } from "./Mesa";
 
@@ -7,13 +7,13 @@ export class ReservaMesa extends BaseEntity{
     @PrimaryGeneratedColumn()
     id!: number;
 
-    @Column({ name: 'id_reserva', type: 'int' })
-    idReserva!: number;
+    // @Column({ name: 'id_reserva', type: 'int' })
+    // idReserva!: number;
 
     @Column({ name: 'id_mesa', type: 'int' })
     idMesa!: number;
 
-    @ManyToOne(() => Reserva, (reserva) => reserva.idReservaMesa) 
+    @OneToMany(() => Reserva, (reserva) => reserva.idReservaMesa) 
     reserva!: Reserva;
 
     @ManyToOne(() => Mesa, (mesa) => mesa.reservasMesa) 
