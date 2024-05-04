@@ -1,5 +1,5 @@
 import { Entity , BaseEntity , Column, OneToMany, PrimaryGeneratedColumn} from "typeorm";
-import { ReservaMesa } from "./ReservaMesa";
+import { Reserva } from "./Reserva";
 
 
 @Entity('mesas')
@@ -14,7 +14,7 @@ export class Mesa extends BaseEntity {
     @Column({ name: 'is_available', type: 'boolean', default: true })
     isAvailable!: boolean;
 
-    @OneToMany(() => ReservaMesa, reservaMesa => reservaMesa.mesa) 
-    reservasMesa!: ReservaMesa[];
+    @OneToMany(() => Reserva, (reserva) => reserva.mesa) 
+    reservas!: Reserva[];
 
 }

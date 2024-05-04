@@ -19,11 +19,11 @@ export class Reservas2014469789870 implements MigrationInterface {
                         type: "int",
                     },
                     {
-                        name: "id_reserva_mesa",
+                        name: "id_mesa",
                         type: "int",
                     },
                     {
-                        name: "id_reserva_juego",
+                        name: "id_juego",
                         type: "int",
                         isNullable: true,
                     },
@@ -54,15 +54,15 @@ export class Reservas2014469789870 implements MigrationInterface {
                         onDelete: "CASCADE",
                     },
                     {
-                        columnNames: ["id_reserva_mesa"],
+                        columnNames: ["id_mesa"],
                         referencedColumnNames: ["id"],
-                        referencedTableName: "reservas_mesas",
+                        referencedTableName: "mesas",
                         onDelete: "CASCADE",
                     },
                     {
-                        columnNames: ["id_reserva_juego"],
+                        columnNames: ["id_juego"],
                         referencedColumnNames: ["id"],
-                        referencedTableName: "reservas_juegos",
+                        referencedTableName: "juegos",
                         onDelete: "CASCADE",
                     },
                     {

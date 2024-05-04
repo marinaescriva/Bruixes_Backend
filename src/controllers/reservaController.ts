@@ -1,9 +1,8 @@
 import { Request, Response } from 'express';
 import { Reserva } from '../models/Reserva';
-import { ReservaMesa } from '../models/ReservaMesa';
 import { Mesa } from '../models/Mesa';
 import { Juego } from '../models/Juego';
-import { ReservaJuego } from '../models/ReservaJuego';
+
 
 export const getAllReservas = async (req: Request, res: Response) => {
     try {
@@ -11,8 +10,8 @@ export const getAllReservas = async (req: Request, res: Response) => {
             select: {
                 id: true,
                 idUsuario: true,
-                idReservaMesa: true,
-                idReservaJuego: true,
+                idMesa: true,
+                idJuego: true,
                 idEvento: true,
                 fechaHoraInicio: true
             }
@@ -41,12 +40,12 @@ export const getAllReservas = async (req: Request, res: Response) => {
 
 export const newReserva = async (req: Request, res: Response) => {
     try {
-        const idUsuario = req.tokenData.id;
-        const { idMesa, idJuego, fechaHoraInicio } = req.body;
+
+        const { idMesa, idJuego, idEvento, fechaHoraInicio, fechaHoraFin} = req.body;
 
         console.log("aqui")
 
-        if (!idUsuario) {
+        if (!idMesa || !fechaHoraInicio || !fechaHoraFin) {
             return res.status(400).json({
                 success: false,
                 message: "Missing required parameters"
@@ -73,26 +72,17 @@ export const newReserva = async (req: Request, res: Response) => {
         }
         console.log("aqui", 2)
 
-        // Crear una asociación entre la reserva_mesa y la mesa seleccionada
-        const reservaMesa = new ReservaMesa();
-        reservaMesa.idMesa = idMesa
-        await reservaMesa.save();
-
-        console.log("aqui", 3)
 
          // Crear una nueva reserva
          const reserva = new Reserva();
-         reserva.idUsuario = idUsuario;
+         reserva.idUsuario = req.tokenData.id;
          reserva.fechaHoraInicio = fechaHoraInicio;
-         reserva.idReservaMesa = reservaMesa.id;
+         reserva.fechaHoraFin = fechaHoraFin;
+         reserva.idMesa = idMesa;
          await reserva.save()
 
         console.log("aqui", 3.4)
 
-        reserva.idReservaMesa = reservaMesa.id;
-        await reserva.save();
-
-        console.log("aqui", 4)
 
         // Si se proporcionó un juego, reservarlo también
         if (idJuego) {
@@ -105,13 +95,8 @@ export const newReserva = async (req: Request, res: Response) => {
                 });
             }
 
-            // Crear una nueva instancia de ReservaJuego y asociarla con el juego seleccionado
-            const reservaJuego = await ReservaJuego.create({
-                idJuego: idJuego
-            }).save();
-
             // Asociar la reservaJuego con la reserva creada
-            reserva.idReservaJuego = reservaJuego.id;
+            reserva.idJuego = idJuego;
             await reserva.save();
         }
 
@@ -119,11 +104,12 @@ export const newReserva = async (req: Request, res: Response) => {
         // Devolver la respuesta con la reserva creada
         res.status(201).json({
             success: true,
-            message: "Reserva creada exitosamente",
+            message: "Reserva is successfully",
             data: {
                 reserva: reserva,
-                reservaMesa: reservaMesa,
-                reservaJuego: idJuego ? idJuego : null
+                mesa: idMesa,
+                juego: idJuego ? idJuego : null,
+                evento: idEvento ? idEvento : null
             }
         });
     } catch (error) {

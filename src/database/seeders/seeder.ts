@@ -30,9 +30,9 @@ const roleSeeder = async () => {
 
 const userSeeder = async () => {
     try {
-        console.log("aqui entra no")
+       
         await roleSeeder();
-        console.log("aqui entra 1")
+       
 
         const userSuperAdmin = new User();
         userSuperAdmin.nombre = 'superadmin';
@@ -43,7 +43,7 @@ const userSeeder = async () => {
         userSuperAdmin.createdAt = new Date();
         userSuperAdmin.updatedAt = new Date();
 
-        console.log(userSuperAdmin.nombre ," el superadmin");
+       
 
         await userSuperAdmin.save();
 
@@ -56,13 +56,13 @@ const userSeeder = async () => {
         userUser.createdAt = new Date();
         userUser.updatedAt = new Date();
 
-        console.log(userUser.nombre ," el user");
+       
 
         await userUser.save();
 
         for (let i = 0; i < 20; i++) {
             const generatedUser = new User();
-            console.log("el usuario 1", i+1);
+            
             generatedUser.nombre = faker.person.firstName();
             generatedUser.email = faker.internet.email();
             generatedUser.password = bcrypt.hashSync('123456', 6);

@@ -3,13 +3,13 @@ import { Reserva } from "./Reserva";
 @Entity('eventos')
 export class Evento extends BaseEntity {
     @PrimaryGeneratedColumn()
-    id!: bigint;
+    id!: number;
 
     @Column({ name: 'nombre', type: 'varchar', length: 50 })
     nombre!: string;
 
     @Column({ name: 'players', type: 'int' })
-    players!: bigint;
+    players!: number;
 
     @Column({ name: 'fecha', type: 'date' })
     fecha!: Date;
