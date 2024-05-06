@@ -30,14 +30,13 @@ export const register = async (req: Request, res: Response) => {
                 },
             }
         );
-        console.log(req.body, "2");
+       
 
         if (user) { 
 
             throw new Error("register cannot be completed");
         }
 
-        console.log(user, " esto da null , 3");
 
         const validEmail = /^\w+([.-_+]?\w+)*@\w+([.-]?\w+)*(\.\w{2,10})+$/;
         if (!validEmail.test(email)) {
@@ -49,17 +48,15 @@ export const register = async (req: Request, res: Response) => {
             )
         }
 
-        console.log(req.body, "4");
 
         if (password.length < 6 || password.length > 10 ) {
             throw new Error("Password has to be between 6 and 10 characters");
           }
 
-          console.log(password, "password??");
 
         const hashedPassword = bcrypt.hashSync(password, 6);
             console.log(hashedPassword)
-            console.log(req.body, "5");
+           
 
             const newUser = new User();
             newUser.nombre = nombre;
@@ -67,16 +64,13 @@ export const register = async (req: Request, res: Response) => {
             newUser.password = hashedPassword;
             newUser.idRole = 2;
             
-            console.log(req.body, "6");
             await newUser.save();
-
-            console.log(newUser)
-            console.log(req.body, "7");
             
             return res.status(201).json(
                 {
                     success: true,
-                    message: "user is registered"
+                    message: "user is registered",
+                    data: newUser
                 }
             )
         
