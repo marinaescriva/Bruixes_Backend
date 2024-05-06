@@ -49,8 +49,9 @@ app.delete(`/api/tables/:id`, auth, superadmin , deleteTable); //funciona
 
 // RESERVAS
 
-app.get(`/api/reservas`, auth, getAllReservas); //funciona pero array vacio porq no hay reservas aun aqui
-app.post(`/api/reservas`, auth, newReserva); //proceso
+app.get(`/api/misreservas`, auth, getAllReservas); //funciona pero array vacio porq no hay reservas aun aqui
+app.get(`/api/reservas`, auth, superadmin, getAllReservas); //funciona pero array vacio porq no hay reservas aun aqui
+app.post(`/api/reservas`, auth, newReserva); // hecho  funciona pero probando
 
 
 export default app;
