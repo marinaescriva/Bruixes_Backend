@@ -5,7 +5,7 @@ import { Mesa } from "../models/Mesa";
 
 export const getAllTables = async (req: Request, res: Response) => {
     try {
-        const mesas = await Mesa.find();
+        const mesas = await Mesa.find({ where: { isAvailable: true } });
 
         res.status(200).json({
             success: true,
