@@ -114,7 +114,7 @@ export const updateProfile = async (req: Request, res: Response) => {
             data: userEmailUpdated,
         });
 
-        console.log(userUpdated, "usuario actualizado");
+        console.log(userUpdated, "actualizado");
 
     } catch (error) {
         res.status(500).json({
