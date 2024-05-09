@@ -156,12 +156,10 @@ export const getMyReservas = async (req: Request, res: Response) => {
                 }
         });
 
-
         res.status(200).json({
             success: true,
             data: reservas
         });
-
        
 
         if (!reservas) {
