@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import { Reserva } from '../models/Reserva';
 import { Mesa } from '../models/Mesa';
 import { Juego } from '../models/Juego';
+import { error } from 'console';
 
 
 export const getAllReservas = async (req: Request, res: Response) => {
@@ -40,13 +41,14 @@ export const getAllReservas = async (req: Request, res: Response) => {
 
 export const newReserva = async (req: Request, res: Response) => {
     try {
-        const { idMesa, idJuego, idEvento, fechaHoraInicio, fechaHoraFin } = req.body;
+        const { idMesa, idJuego, idEvento, fechaHoraInicio } = req.body;
 
         // Verificar si los parámetros requeridos están presentes
-        if (!idMesa || !fechaHoraInicio || !fechaHoraFin) {
+        if (!idMesa || !fechaHoraInicio ) {
             return res.status(400).json({
                 success: false,
-                message: "Faltan parámetros requeridos"
+                message: "Faltan parámetros requeridos",
+                error: error
             });
         }
 
@@ -55,6 +57,11 @@ export const newReserva = async (req: Request, res: Response) => {
             where: {
                 isAvailable: true,
                 id: idMesa
+            },
+            relations:{
+                reservas: {
+                    juego: true
+                }
             }
         });
 
@@ -74,7 +81,10 @@ export const newReserva = async (req: Request, res: Response) => {
                 where: {
                     id: idJuego,
                     isAvailable: true
-                }
+                }, relations: {reservas:
+                    { juego: true
+
+                }}
             });
 
             if (!juego) {
@@ -92,7 +102,6 @@ export const newReserva = async (req: Request, res: Response) => {
         const reserva = new Reserva();
         reserva.idUsuario = req.tokenData.id;
         reserva.fechaHoraInicio = fechaHoraInicio;
-        reserva.fechaHoraFin = fechaHoraFin;
         reserva.idMesa = idMesa;
 
         if (idJuego) {
@@ -101,15 +110,20 @@ export const newReserva = async (req: Request, res: Response) => {
 
         await reserva.save();
 
+        const reservaId = await Reserva.findOne({
+            where: {
+                id: reserva.id
+            }, relations: { 
+                mesa: true, juego: true
+             }
+        });
+
         // Devolver la respuesta con la reserva creada
         res.status(201).json({
             success: true,
             message: "Reserva creada exitosamente",
             data: {
-                reserva: reserva,
-                mesa: idMesa,
-                juego: idJuego ? idJuego : null,
-                evento: idEvento ? idEvento : null
+                reservaId
             }
         });
     } catch (error) {
@@ -118,6 +132,50 @@ export const newReserva = async (req: Request, res: Response) => {
         res.status(500).json({
             success: false,
             message: "Error interno del servidor"
+        });
+    }
+};
+
+
+export const getMyReservas = async (req: Request, res: Response) => {
+    try {
+        const reservas = await Reserva.find({
+            where: {
+                idUsuario: req.tokenData.id
+            },
+            select: {
+                id: true,
+                idUsuario: true,
+                idMesa: true,
+                idJuego: true,
+                idEvento: true,
+                fechaHoraInicio: true
+            },
+            relations: { 
+                juego: true, 
+                }
+        });
+
+
+        res.status(200).json({
+            success: true,
+            data: reservas
+        });
+
+       
+
+        if (!reservas) {
+            res.status(404).json({
+                success: false,
+                message: "Any reservation found"
+            });
+            return;
+        }
+
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            message: 'Internal Server Error'
         });
     }
 };

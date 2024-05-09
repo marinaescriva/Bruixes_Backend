@@ -25,9 +25,6 @@ export class Reserva extends BaseEntity {
     @Column({ name: 'fecha_hora_inicio', type: 'datetime' })
     fechaHoraInicio!: Date;
 
-    @Column({ name: 'fecha_hora_fin', type: 'datetime' })
-    fechaHoraFin!: Date;
-
     @Column({ name: 'created_at', type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
     createdAt!: Date;
 

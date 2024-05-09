@@ -37,10 +37,6 @@ export class Reservas2014469789870 implements MigrationInterface {
                         type: "datetime",
                     },
                     {
-                        name: "fecha_hora_fin",
-                        type: "datetime",
-                    },
-                    {
                         name: "created_at",
                         type: "timestamp",
                         default: "CURRENT_TIMESTAMP",
