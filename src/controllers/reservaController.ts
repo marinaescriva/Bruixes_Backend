@@ -177,3 +177,50 @@ export const getMyReservas = async (req: Request, res: Response) => {
         });
     }
 };
+
+export const deleteReservaById = async (req: Request, res: Response) => {
+    try {
+        const reservaId = parseInt(req.params.id); 
+        const userId = req.tokenData.id;
+
+        const reservaDeleting: any = await Reserva.findOneBy({
+            id: reservaId,
+        });
+
+        console.log(reservaDeleting);
+
+        if (!reservaDeleting) {
+            res.status(404).json({
+                success: false,
+                message: "Reserva not found"
+            });
+            return;
+        }
+
+       
+        if ((userId !== 1) && userId !== reservaDeleting.idUsuario) {
+            res.status(403).json({
+                success: false,
+                message: "You are not authorized to delete this reserva"
+            });
+            return;
+        }
+
+     
+        await Reserva.delete({
+            id: reservaId
+        });
+
+        res.status(200).json({
+            success: true,
+            message: "Reserva deleted"
+        });
+
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            message: "Internal Server Error"
+        });
+    }
+};
+
