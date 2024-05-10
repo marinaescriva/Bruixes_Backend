@@ -68,7 +68,6 @@ export const getMyProfile = async (req: Request, res: Response) => {
 export const updateProfile = async (req: Request, res: Response) => {
     try {
         const id = req.tokenData.id;
-
         const nombre = req.body.nombre;
         const email = req.body.email;
 
@@ -88,15 +87,10 @@ export const updateProfile = async (req: Request, res: Response) => {
             },
         });
 
-        if (userEmail) {
-            throw new Error("Email already in use");
-        }
-
         const userUpdated = await User.update(
             {
                 id: id,
             },
-
             {
                 nombre: nombre,
                 email: email,
@@ -105,7 +99,7 @@ export const updateProfile = async (req: Request, res: Response) => {
 
         const userEmailUpdated = await User.findOne({
             where: { id },
-            select: ['nombre', 'email']
+            // select: ['nombre', 'email']
         });
 
         res.status(201).json({
