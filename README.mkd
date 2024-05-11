@@ -1,5 +1,204 @@
 
-// para crear una reserva de mesa con un juego pero sin evento
+## Bruixes i Fades Backend Project 
+__________________________
+
+This repository contains the backend code for a mobile web application called Bruixes i Fades.
+
+Frontend of this project: [Bruixes i Fades Frontend](https://github.com/marinaescriva/Bruixes_Frontend)
+
+
+### About the project
+
+
+Bruixes i Fades is a board game pub where you can enjoy different beers and play board games with friends.
+
+### Project development and ideation
+
+The project idea stems from a local café near my home, for which I created a comprehensive graphic identity project in 2022: [Bruixes i Fades](https://marinaescrivasalvador.myportfolio.com/bruixes-fades)
+
+
+### Database Design
+
+![Database](src/img/DBdesign.png)
+
+### Stack
+
+[![MySQL](https://img.shields.io/badge/MySQL-4479A1?style=for-the-badge&logo=mysql&logoColor=white)](https://www.mysql.com/)[![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)[![Git](https://img.shields.io/badge/Git-F05032?style=for-the-badge&logo=git&logoColor=white)](https://git-scm.com/)[![Thunder Client](https://img.shields.io/badge/Thunder_Client-404EED?style=for-the-badge&logo=thunderbird&logoColor=white)](https://www.thunderclient.io/)
+
+
+### API Endpoints
+
+##### 1. User Registration
+- URL: /api/auth/register
+- Method: POST
+- Description: Registers a new user.
+<details>
+  <summary>Request body:</summary>
+
+  ```json
+  {
+    "username": "Ana",
+    "email": "ana@gmail.com",
+    "password": "224466"
+  }
+  ```
+</details>
+</br>
+===========================
+</br>
+
+##### 2. User Login
+- URL: /api/auth/login
+- Method: POST
+- Description: Logs in an existing user.
+
+<details>
+  <summary>Request body:</summary>
+
+ ```json
+{
+  "email": "ana@gmail.com",
+  "password": "224466"
+}
+```
+</details>
+</br>
+===========================
+</br>
+
+##### 3. Get All Games
+- URL: /api/games
+- Method: GET
+- Description: Retrieves all games available.
+- Request: token on Auth/Bearer.
+<details>
+  <summary>Response:</summary>
+
+  ```json
+  {
+    "success": true,
+    "data": [
+      {
+        "id": 1,
+        "nombre": "Catan",
+        "jugadores": 4,
+        "isAvailable": true
+      },
+      {
+        "id": 2,
+        "nombre": "Ticket to Ride",
+        "jugadores": 5,
+        "isAvailable": true
+      },
+      {
+        "id": 3,
+        "nombre": "Pandemic",
+        "jugadores": 4,
+        "isAvailable": false
+      }
+    ]
+  }
+   ```
+   </details>
+
+   </br>
+===========================
+</br>
+
+  ##### 4. Delete Game
+  
+- URL: /api/games/:id
+- Method: DELETE
+- Description: Deletes a game by its ID.
+- Request: token of Super Admin on Auth/Bearer.
+
+<details>
+  <summary>Response:</summary>
+
+  ```json
+{
+ "success": true,
+ "message": "Game deleted"
+}
+
+ ```
+</details>
+
+   </br>
+===========================
+</br>
+
+##### 5. Get All Tables
+- URL: /api/tables
+- Method: GET
+- Description: Retrieves all available tables.
+- Request: token on Auth/Bearer.
+<details>
+  <summary>Response:</summary>
+
+  ```json
+  {
+    "success": true,
+    "data": [
+      {
+        "id": 1,
+        "numero": 1,
+        "capacidad": 4,
+        "isAvailable": true
+      },
+      {
+        "id": 2,
+        "numero": 2,
+        "capacidad": 6,
+        "isAvailable": true
+      },
+      {
+        "id": 3,
+        "numero": 3,
+        "capacidad": 8,
+        "isAvailable": false
+      }
+    ]
+  }
+  ```
+</details>
+
+   </br>
+===========================
+</br>
+
+##### 6. Delete Tables
+- URL: /api/tables/:id
+- Method: DELETE
+- Description: Deletes a table by its ID.
+- Request: token of Super Admin on Auth/Bearer.
+<details>
+  <summary>Response:</summary>
+
+  ```json
+
+{
+"success": true,
+"message": "Table deleted"
+}
+
+ ```
+
+</details>
+
+   </br>
+===========================
+</br>
+
+
+
+
+
+
+
+
+The brand redesign focuses on board games, game boards, chess pieces, and other elements that symbolize tabletop gaming. The main brand features a chess piece with a witch's hat—a chess piece symbolizing tabletop gaming and a witch's hat referencing the pub's name.
+
 
     {
   "idMesa":"2",
