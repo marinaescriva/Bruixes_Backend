@@ -28,6 +28,8 @@ The project idea stems from a local café near my home, for which I created a co
 
 ### API Endpoints
 
+<details> <summary> How it works </summary>
+
 ##### 1. User Registration
 - URL: /api/auth/register
 - Method: POST
@@ -191,18 +193,266 @@ The project idea stems from a local café near my home, for which I created a co
 </br>
 
 
+##### 7. Get All Users
+- URL: /api/users
+- Method: GET
+- Description: Retrieves all users.
+- Request: token of Super Admin on Auth/Bearer.
+<details>
+  <summary>Response:</summary>
 
+  ```json
+  {
+    "success": true,
+    "data": [
+      {
+        "id": 1,
+        "nombre": "John Doe",
+        "email": "john@example.com",
+        "createdAt": "2024-04-24T12:00:00Z",
+        "updatedAt": "2024-04-24T12:00:00Z"
+      },
+      {
+        "id": 2,
+        "nombre": "Jane Smith",
+        "email": "jane@example.com",
+        "createdAt": "2024-04-24T12:00:00Z",
+        "updatedAt": "2024-04-24T12:00:00Z"
+      }
+    ]
+  }
+```
 
+</details>
 
+   </br>
+===========================
+</br>
 
+##### 8. Get My Profile
+- URL: /api/users/profile
+- Method: GET
+- Description: Retrieves the profile of the current user.
+- Request: token on Auth/Bearer.
+<details>
+  <summary>Response:</summary>
 
-
-The brand redesign focuses on board games, game boards, chess pieces, and other elements that symbolize tabletop gaming. The main brand features a chess piece with a witch's hat—a chess piece symbolizing tabletop gaming and a witch's hat referencing the pub's name.
-
-
-    {
-  "idMesa":"2",
-  "idJuego":"4",
-  "idEvento:"2"
-  "fechaHoraInicio":"2023-01-01T12:00:00.000Z",
+  ```json
+  {
+"success": true,
+"data": {
+  "id": 1,
+  "nombre": "John Doe",
+  "email": "john@example.com",
+  "createdAt": "2024-04-24T12:00:00Z",
+  "updatedAt": "2024-04-24T12:00:00Z"
 }
+}
+```
+</details>
+   </br>
+===========================
+</br>
+
+##### 9. Update Profile
+- URL: /api/users/profile
+- Method: PUT
+- Description: Updates the profile of the current user. 
+(Can update name and/or email)
+- Request: token on Auth/Bearer.
+<details>
+  <summary>Request body:</summary>
+
+  ```json
+  {
+  "nombre": "John Smith",
+  "email": "john@example.com"
+}
+
+```
+</details>
+<details>
+  <summary>Response:</summary>
+
+  ```json
+{
+"success": true,
+"message": "User updated",
+"data": {
+  "id": 1,
+  "nombre": "John Smith",
+  "email": "john@example.com",
+  "createdAt": "2024-04-24T12:00:00Z",
+  "updatedAt": "2024-04-24T12:00:00Z"
+}
+}
+
+```
+</details>
+   </br>
+===========================
+</br>
+
+##### 10. Delete User
+- URL: /api/users/:id
+- Method: DELETE
+- Description: Deletes a user by its ID.
+- Request: token of Super Admin on Auth/Bearer.
+<details>
+  <summary>Response:</summary>
+
+  ```json
+{
+"success": true,
+"message": "User deleted successfuly"
+}
+
+```
+</details>
+   </br>
+===========================
+</br>
+
+##### 11. Get All Reservas
+- URL: /api/reservas
+- Method: GET
+- Description: Retrieves all reservations.
+- Request: token of Super Admin on Auth/Bearer.
+<details>
+  <summary>Response:</summary>
+
+  ```json
+  {
+    "success": true,
+    "data": [
+      {
+        "id": 1,
+        "idUsuario": 1,
+        "idMesa": 1,
+        "idJuego": 1,
+        "idEvento": null,
+        "fechaHoraInicio": "2024-04-25T12:00:00Z"
+      },
+      {
+        "id": 2,
+        "idUsuario": 2,
+        "idMesa": 2,
+        "idJuego": null,
+        "idEvento": null,
+        "fechaHoraInicio": "2024-04-25T13:00:00Z"
+      }
+    ]
+  }
+  ```
+   </details>
+   </br>
+===========================
+</br>
+
+##### 12. New Reserva
+- URL: /api/reservas
+- Method: POST
+- Description: Creates a new reservation.
+- Request: token on Auth/Bearer.
+<details>
+  <summary>Request body:</summary>
+
+  ```json
+  {
+  "idMesa": 1,
+  "idJuego": 1,
+  "fechaHoraInicio": "2024-04-26T14:00:00Z"
+}
+
+  ```
+   </details>
+
+   <details>
+  <summary>Response:</summary>
+
+  ```json
+  {
+"success": true,
+"message": "Reserva creada exitosamente",
+"data": {
+  "reservaId": {
+      "id": 3,
+      "idUsuario": 1,
+      "idMesa": 1,
+      "idJuego": 1,
+      "idEvento": null,
+      "fechaHoraInicio": "2024-04-26T14:00:00Z"
+  }
+}
+}
+ ```
+   </details>
+   </br>
+===========================
+</br>
+
+##### 13. Get My Reservas
+- URL: /api/misreservas
+- Method: GET
+- Description: Retrieves reservations of the current user.
+- Request: token on Auth/Bearer.
+<details>
+  <summary>Response:</summary>
+
+  ```json
+ {
+"success": true,
+"data": [
+  {
+      "id": 1,
+      "idUsuario": 1,
+      "idMesa": 1,
+      "idJuego": 1,
+      "idEvento": null,
+      "fechaHoraInicio": "2024-04-25T12:00:00Z"
+  }
+]
+}
+  ```
+   </details>
+   </br>
+===========================
+</br>
+
+##### 14. Delete Reserva
+- URL: /api/reservas/:id
+- Method: DELETE
+- Description: Deletes a reservation by its ID.
+- Request: token of Super Admin or owner on Auth/Bearer.
+<details>
+  <summary>Response:</summary>
+
+  ```json
+ {
+"success": true,
+"message": "Reserva deleted"
+}
+  ```
+   </details>
+   </br>
+===========================
+</br>
+
+</details>
+
+### Future features
+
+- Add events to join
+- Limit reservations choose diferent params like date/table/game to allow more options
+- Add more information about games ( players , duration..etc)
+
+### Author
+
+- Marina Escrivà 
+
+[LinkedIn](https://www.linkedin.com/in/marina-escriv%C3%A1-salvador-047134100/) <img src="https://simpleicons.org/icons/linkedin.svg" width="20" height="20" />
+
+[Porfolio](https://marinaescrivasalvador.myportfolio.com/) <img src="https://simpleicons.org/icons/adobe.svg" width="20" height="20" />
+
+[marinaescriva.24@gmail.com](mailto:marinaescriva.24@gmail.com) <img src="https://simpleicons.org/icons/gmail.svg" width="20" height="20" />
+
