@@ -2,13 +2,15 @@
 ## Bruixes i Fades Backend Project 
 __________________________
 
+![LOGO](src/img/Logotipo_respeto_modificaciones_tipograf-59.png)
+__________________________
+
 This repository contains the backend code for a mobile web application called Bruixes i Fades.
 
 Frontend of this project: [Bruixes i Fades Frontend](https://github.com/marinaescriva/Bruixes_Frontend)
 
 
 ### About the project
-
 
 Bruixes i Fades is a board game pub where you can enjoy different beers and play board games with friends.
 
@@ -25,6 +27,93 @@ The project idea stems from a local café near my home, for which I created a co
 
 [![MySQL](https://img.shields.io/badge/MySQL-4479A1?style=for-the-badge&logo=mysql&logoColor=white)](https://www.mysql.com/)[![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)[![Git](https://img.shields.io/badge/Git-F05032?style=for-the-badge&logo=git&logoColor=white)](https://git-scm.com/)[![Thunder Client](https://img.shields.io/badge/Thunder_Client-404EED?style=for-the-badge&logo=thunderbird&logoColor=white)](https://www.thunderclient.io/)
 
+
+### Installation
+
+Here's how to install the repository
+
+1. Clone the repository
+
+```json
+ git clone https://github.com/marinaescriva/Bruixes_Backend.git
+  ```
+
+  2. Connect the repository to the database using the .env.sample file as a template
+
+```json
+
+PORT=4001
+
+DB_USER=user
+DB_ROOT_PASSWORD=12345
+DB_PORT=3312
+DB_HOST=localhost
+DB_DATABASE=bruixes_i_fades_example
+
+JWT_SECRET=jwtsecret
+
+  ```
+
+3. Add the scripts and dependences to the package.json
+
+```json
+{
+  "name": "bruixes_back_ts",
+  "version": "1.0.0",
+  "description": "API for Bruixes i Fades",
+  "main": "server.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon ./src/server.ts",
+    "run-migrations": "npx typeorm-ts-node-commonjs migration:run -d ./src/database/db.ts",
+    "revert-migrations": "npx typeorm-ts-node-commonjs migration:revert -d ./src/database/db.ts",
+    "build": "tsc",
+    "start": "node ./dist/server.js",
+    "seeder": "ts-node ./src/Database/seeders/seeder.ts"
+  },
+  "dependencies": {
+    "@faker-js/faker": "^8.4.1",
+    "@types/cors": "^2.8.17",
+    "bcrypt": "^5.1.1",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "faker": "^6.6.6",
+    "jsonwebtoken": "^9.0.2",
+    "mysql2": "^3.9.7",
+    "reflect-metadata": "^0.2.2",
+    "typeorm": "^0.3.20"
+  },
+  "devDependencies": {
+    "@types/bcrypt": "^5.0.2",
+    "@types/express": "^4.17.21",
+    "@types/jsonwebtoken": "^9.0.6",
+    "@types/node": "^20.12.7",
+    "nodemon": "^3.1.0",
+    "ts-node": "^10.9.2",
+    "ts-node-dev": "^2.0.0",
+    "typescript": "^5.4.5"
+  }
+}
+
+```
+
+4. Run migrations
+
+```json
+npm run run-migrations
+```
+
+5. Run seeders
+
+```json
+npm run seeder
+```
+6. Start de server
+
+```json
+npm run dev
+```
 
 ### API Endpoints
 
