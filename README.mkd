@@ -128,7 +128,7 @@ npm run dev
 
   ```json
   {
-    "username": "Ana",
+    "nombre": "Ana",
     "email": "ana@gmail.com",
     "password": "224466"
   }
